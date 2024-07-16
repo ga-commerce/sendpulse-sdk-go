@@ -199,7 +199,7 @@ type IgBotSendMessagesParams struct {
 }
 
 func (service *BotsIgService) SendTextByContact(ctx context.Context, params IgBotSendMessagesParams) error {
-	path := "/instagram/contacts/sendText"
+	path := "/instagram/contacts/send"
 
 	var respData struct {
 		Success bool `json:"success"`

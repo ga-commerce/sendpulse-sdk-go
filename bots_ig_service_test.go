@@ -240,7 +240,7 @@ func (suite *SendpulseTestSuite) TestBotsIgService_GetContactsByVariable() {
 }
 
 func (suite *SendpulseTestSuite) TestBotsIgService_SendTextByContact() {
-	suite.mux.HandleFunc("/instagram/contacts/sendText", func(w http.ResponseWriter, r *http.Request) {
+	suite.mux.HandleFunc("/instagram/contacts/send", func(w http.ResponseWriter, r *http.Request) {
 		suite.Equal(http.MethodPost, r.Method)
 
 		fmt.Fprintf(w, `{
