@@ -487,8 +487,22 @@ func (service *BotsIgService) GetBotChats(ctx context.Context, botID string) ([]
 	return respData.Data, err
 }
 
-func (service *BotsIgService) GetContactMessages(ctx context.Context, contactID string) ([]*IgBotMessage, error) {
-	path := fmt.Sprintf("/instagram/chats/messages?contact_id=%s", contactID)
+func (service *BotsIgService) GetContactMessages(ctx context.Context, contactID string, size *int, skip *int, order *string) ([]*IgBotMessage, error) {
+	defaultSize := 20
+	defaultSkip := 0
+	defaultOrder := "desc"
+
+	// 检查传入的参数，如果为nil则使用默认值
+	if size == nil {
+		size = &defaultSize
+	}
+	if skip == nil {
+		skip = &defaultSkip
+	}
+	if order == nil {
+		order = &defaultOrder
+	}
+	path := fmt.Sprintf("/instagram/chats/messages?contact_id=%s&size=%d&skip=%d&order=%s", contactID, *size, *skip, *order)
 
 	var respData struct {
 		Success bool            `json:"success"`
