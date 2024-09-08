@@ -158,11 +158,11 @@ type FbBotSendTextParams struct {
 
 type FbBotSendImageParams struct {
 	ContactID string `json:"contact_id"`
-	Messages  []struct {
+	Message   struct {
 		Type        string `json:"type"`
 		Tag         string `json:"tag"`
 		ContentType string `json:"content_type"`
-		Img         string `json:"img"`
+		File        string `json:"file"`
 	} `json:"messages"`
 }
 

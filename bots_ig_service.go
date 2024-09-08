@@ -211,14 +211,16 @@ func (service *BotsIgService) SendTextByContact(ctx context.Context, params IgBo
 type IgBotSendImageMessagesParams struct {
 	ContactID string `json:"contact_id"`
 	Messages  []struct {
-		Type       string `json:"type"`
-		Attachment struct {
-			Type    string `json:"type"`
-			Payload struct {
-				IsExternalAttachment bool   `json:"is_external_attachment"`
-				Url                  string `json:"url"`
-			} `json:"payload"`
-		} `json:"attachment"`
+		Type    string `json:"type"`
+		Message struct {
+			Attachment struct {
+				Type    string `json:"type"`
+				Payload struct {
+					IsExternalAttachment bool   `json:"is_external_attachment"`
+					Url                  string `json:"url"`
+				} `json:"payload"`
+			} `json:"attachment"`
+		} `json:"message"`
 	} `json:"messages"`
 }
 
