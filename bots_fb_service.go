@@ -156,17 +156,9 @@ type FbBotSendTextParams struct {
 	Text        string `json:"text"`
 }
 
-type FbBotSendImageMessage struct {
-	Type        *string `json:"type,omitempty"`
-	Tag         string  `json:"tag"`
-	ContentType *string `json:"content_type,omitempty"`
-	File        *string `json:"file,omitempty"`
-	Img         *string `json:"img,omitempty"`
-}
-
 type FbBotSendImageParams struct {
 	ContactID string                 `json:"contact_id"`
-	Message   map[string]interface{} `json:"messages"`
+	Message   map[string]interface{} `json:"message"`
 }
 
 func (service *BotsFbService) SendTextByContact(ctx context.Context, params FbBotSendTextParams) error {
