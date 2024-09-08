@@ -208,20 +208,28 @@ func (service *BotsIgService) SendTextByContact(ctx context.Context, params IgBo
 	return err
 }
 
+type IgBotSendMessageAttachmentPayload struct {
+	IsExternalAttachment bool   `json:"is_external_attachment"`
+	Url                  string `json:"url"`
+}
+
+type IgBotSendMessageAttachment struct {
+	Type    string                            `json:"type"`
+	Payload IgBotSendMessageAttachmentPayload `json:"payload"`
+}
+
+type IgBotSendMessage struct {
+	Attachment IgBotSendMessageAttachment `json:"attachment"`
+}
+
+type IgBotSendMessages struct {
+	Type    string           `json:"type"`
+	Message IgBotSendMessage `json:"message"`
+}
+
 type IgBotSendImageMessagesParams struct {
-	ContactID string `json:"contact_id"`
-	Messages  []struct {
-		Type    string `json:"type"`
-		Message struct {
-			Attachment struct {
-				Type    string `json:"type"`
-				Payload struct {
-					IsExternalAttachment bool   `json:"is_external_attachment"`
-					Url                  string `json:"url"`
-				} `json:"payload"`
-			} `json:"attachment"`
-		} `json:"message"`
-	} `json:"messages"`
+	ContactID string              `json:"contact_id"`
+	Messages  []IgBotSendMessages `json:"messages"`
 }
 
 func (service *BotsIgService) SendImageByContact(ctx context.Context, params IgBotSendImageMessagesParams) error {
