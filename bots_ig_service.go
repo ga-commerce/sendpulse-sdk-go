@@ -208,6 +208,30 @@ func (service *BotsIgService) SendTextByContact(ctx context.Context, params IgBo
 	return err
 }
 
+type IgBotSendImageMessagesParams struct {
+	ContactID string `json:"contact_id"`
+	Messages  []struct {
+		Type       string `json:"type"`
+		Attachment struct {
+			Type    string `json:"type"`
+			Payload struct {
+				IsExternalAttachment bool   `json:"is_external_attachment"`
+				Url                  string `json:"url"`
+			} `json:"payload"`
+		} `json:"attachment"`
+	} `json:"messages"`
+}
+
+func (service *BotsIgService) SendImageByContact(ctx context.Context, params IgBotSendImageMessagesParams) error {
+	path := "/instagram/contacts/send"
+
+	var respData struct {
+		Success bool `json:"success"`
+	}
+	_, err := service.client.newRequest(ctx, http.MethodPost, path, params, &respData, true)
+	return err
+}
+
 func (service *BotsIgService) SetVariableToContact(ctx context.Context, contactID string, variableID string, variableName string, variableValue interface{}) error {
 	path := "/instagram/contacts/setVariable"
 

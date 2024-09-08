@@ -156,8 +156,28 @@ type FbBotSendTextParams struct {
 	Text        string `json:"text"`
 }
 
+type FbBotSendImageParams struct {
+	ContactID string `json:"contact_id"`
+	Messages  []struct {
+		Type        string `json:"type"`
+		Tag         string `json:"tag"`
+		ContentType string `json:"content_type"`
+		Img         string `json:"img"`
+	} `json:"messages"`
+}
+
 func (service *BotsFbService) SendTextByContact(ctx context.Context, params FbBotSendTextParams) error {
 	path := "/messenger/contacts/sendText"
+
+	var respData struct {
+		Success bool `json:"success"`
+	}
+	_, err := service.client.newRequest(ctx, http.MethodPost, path, params, &respData, true)
+	return err
+}
+
+func (service *BotsFbService) SendImageByContact(ctx context.Context, params FbBotSendImageParams) error {
+	path := "/messenger/contacts/send"
 
 	var respData struct {
 		Success bool `json:"success"`
