@@ -1,4 +1,4 @@
-module github.com/ga-commerce/sendpulse-sdk-go/v7
+module github.com/ga-commerce/sendpulse-sdk-go/v8
 
 go 1.14
 
