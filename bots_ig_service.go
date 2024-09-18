@@ -502,6 +502,7 @@ type IgBotMessage struct {
 	Direction  int                    `json:"direction"`
 	Status     int                    `json:"status"`
 	CreatedAt  time.Time              `json:"created_at"`
+	Type       string                 `json:"type"`
 }
 
 type IgBotChat struct {

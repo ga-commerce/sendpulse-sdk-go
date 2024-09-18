@@ -465,6 +465,7 @@ type FbBotMessage struct {
 	OpenedAt     time.Time              `json:"opened_at"`
 	RedirectedAt time.Time              `json:"redirected_at"`
 	CreatedAt    time.Time              `json:"created_at"`
+	Type         string                 `json:"type"`
 }
 
 type FbBotChat struct {
