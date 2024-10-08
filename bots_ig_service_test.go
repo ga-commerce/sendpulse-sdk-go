@@ -580,7 +580,7 @@ func (suite *SendpulseTestSuite) TestBotsIgService_GetContactMessages() {
 		}`)
 	})
 
-	messages, err := suite.client.Bots.Ig.GetContactMessages(context.Background(), "bot")
+	messages, err := suite.client.Bots.Ig.GetContactMessages(context.Background(), "bot", nil, nil, nil)
 	suite.NoError(err)
 	suite.Equal("string", messages[0].ID)
 }
