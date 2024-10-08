@@ -156,23 +156,17 @@ func (service *BotsLiveChatService) SendTextByContact(ctx context.Context, param
 	return err
 }
 
-type LiveChatBotSendMessageAttachmentPayload struct {
-	IsExternalAttachment bool   `json:"is_external_attachment"`
-	Url                  string `json:"url"`
+type LiveChatBotSendMessageImageFile struct {
+	Path string `json:"path"`
 }
 
-type LiveChatBotSendMessageAttachment struct {
-	Type    string                                  `json:"type"`
-	Payload LiveChatBotSendMessageAttachmentPayload `json:"payload"`
-}
-
-type LiveChatBotSendMessage struct {
-	Attachment LiveChatBotSendMessageAttachment `json:"attachment"`
+type LiveChatBotSendMessageImage struct {
+	File LiveChatBotSendMessageImageFile `json:"file"`
 }
 
 type LiveChatBotSendMessages struct {
-	Type    string                 `json:"type"`
-	Message LiveChatBotSendMessage `json:"message"`
+	Type  string                      `json:"type"`
+	Image LiveChatBotSendMessageImage `json:"image"`
 }
 
 type LiveChatBotSendImageMessagesParams struct {
