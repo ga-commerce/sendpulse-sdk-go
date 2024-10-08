@@ -49,31 +49,11 @@ func (service *BotsLiveChatService) GetAccount(ctx context.Context) (*LiveChatAc
 }
 
 type LiveChatBot struct {
-	ID          string `json:"id"`
-	ChannelData struct {
-		ID         string `json:"id"`
-		FirstName  string `json:"first_name"`
-		LastName   string `json:"last_name"`
-		Name       string `json:"name"`
-		NameFormat string `json:"name_format"`
-		ShortName  string `json:"short_name"`
-		Picture    struct {
-			Data struct {
-				Height       int    `json:"height"`
-				IsSilhouette bool   `json:"is_silhouette"`
-				Url          string `json:"url"`
-				Width        int    `json:"width"`
-			} `json:"data"`
-		} `json:"picture"`
-	} `json:"channel_data"`
-	LiveChatUser struct {
-		ID                int    `json:"id"`
-		LcID              int    `json:"lc_id"`
-		ProfilePictureUrl string `json:"profile_picture_url"`
-		Username          string `json:"username"`
-		Website           string `json:"website"`
-	} `json:"ig_user"`
-	Inbox struct {
+	ID      string `json:"id"`
+	Channel string `json:"channel"`
+	Name    string `json:"name"`
+	Avatar  string `json:"avatar"`
+	Inbox   struct {
 		Total  int `json:"total"`
 		Unread int `json:"unread"`
 	} `json:"inbox"`
@@ -397,12 +377,12 @@ type BotLiveChatFlow struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func (service *BotsLiveChatService) GetFlows(ctx context.Context, botID string) ([]*BotIgFlow, error) {
+func (service *BotsLiveChatService) GetFlows(ctx context.Context, botID string) ([]*BotLiveChatFlow, error) {
 	path := fmt.Sprintf("/live-chat/flows?bot_id=%s", botID)
 
 	var respData struct {
-		Success bool         `json:"success"`
-		Data    []*BotIgFlow `json:"data"`
+		Success bool               `json:"success"`
+		Data    []*BotLiveChatFlow `json:"data"`
 	}
 	_, err := service.client.newRequest(ctx, http.MethodGet, path, nil, &respData, true)
 	return respData.Data, err
@@ -474,23 +454,23 @@ type LiveChatBotMessage struct {
 }
 
 type LiveChatBotChat struct {
-	Contact          *IgBotContact `json:"contact"`
-	InboxLastMessage *IgBotMessage `json:"inbox_last_message"`
-	InboxUnread      int           `json:"inbox_unread"`
+	Contact          *LiveChatBotContact `json:"contact"`
+	InboxLastMessage *LiveChatBotMessage `json:"inbox_last_message"`
+	InboxUnread      int                 `json:"inbox_unread"`
 }
 
-func (service *BotsLiveChatService) GetBotChats(ctx context.Context, botID string) ([]*IgBotChat, error) {
+func (service *BotsLiveChatService) GetBotChats(ctx context.Context, botID string) ([]*LiveChatBotChat, error) {
 	path := fmt.Sprintf("/live-chat/chats?bot_id=%s", botID)
 
 	var respData struct {
-		Success bool         `json:"success"`
-		Data    []*IgBotChat `json:"data"`
+		Success bool               `json:"success"`
+		Data    []*LiveChatBotChat `json:"data"`
 	}
 	_, err := service.client.newRequest(ctx, http.MethodGet, path, nil, &respData, true)
 	return respData.Data, err
 }
 
-func (service *BotsLiveChatService) GetContactMessages(ctx context.Context, contactID string, size *int, skip *int, order *string) ([]*IgBotMessage, error) {
+func (service *BotsLiveChatService) GetContactMessages(ctx context.Context, contactID string, size *int, skip *int, order *string) ([]*LiveChatBotMessage, error) {
 	defaultSize := 20
 	defaultSkip := 0
 	defaultOrder := "desc"
@@ -508,18 +488,18 @@ func (service *BotsLiveChatService) GetContactMessages(ctx context.Context, cont
 	path := fmt.Sprintf("/live-chat/chats/messages?contact_id=%s&size=%d&skip=%d&order=%s", contactID, *size, *skip, *order)
 
 	var respData struct {
-		Success bool            `json:"success"`
-		Data    []*IgBotMessage `json:"data"`
+		Success bool                  `json:"success"`
+		Data    []*LiveChatBotMessage `json:"data"`
 	}
 	_, err := service.client.newRequest(ctx, http.MethodGet, path, nil, &respData, true)
 	return respData.Data, err
 }
 
 type LiveChatBotSendCampaignParams struct {
-	Title    string                 `json:"title"`
-	BotID    string                 `json:"bot_id"`
-	SendAt   time.Time              `json:"send_at"`
-	Messages []IgBotCampaignMessage `json:"messages"`
+	Title    string                       `json:"title"`
+	BotID    string                       `json:"bot_id"`
+	SendAt   time.Time                    `json:"send_at"`
+	Messages []LiveChatBotCampaignMessage `json:"messages"`
 }
 
 type LiveChatBotCampaignMessage struct {
@@ -529,7 +509,7 @@ type LiveChatBotCampaignMessage struct {
 	} `json:"message"`
 }
 
-func (service *BotsLiveChatService) SendCampaign(ctx context.Context, params IgBotSendCampaignParams) error {
+func (service *BotsLiveChatService) SendCampaign(ctx context.Context, params LiveChatBotSendCampaignParams) error {
 	path := "/live-chat/campaigns/send"
 
 	var respData struct {
