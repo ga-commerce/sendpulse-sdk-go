@@ -139,10 +139,10 @@ func (service *BotsLiveChatService) GetContactsByVariable(ctx context.Context, p
 type LiveChatBotSendMessagesParams struct {
 	ContactID string `json:"contact_id"`
 	Messages  []struct {
-		Type    string `json:"type"`
-		Message struct {
+		Type string `json:"type"`
+		Text struct {
 			Text string `json:"text"`
-		} `json:"message"`
+		} `json:"text"`
 	} `json:"messages"`
 }
 
