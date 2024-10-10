@@ -129,7 +129,7 @@ type IgBotContact struct {
 	BotID       string `json:"bot_id"`
 	Status      int    `json:"status"`
 	ChannelData struct {
-		ID         string `json:"id"`
+		ID         int64  `json:"id"`
 		UserName   string `json:"user_name"`
 		FirstName  string `json:"first_name"`
 		LastName   string `json:"last_name"`
